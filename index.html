@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmberAssess - Precision in Every Evaluation</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@600&display=swap" rel="stylesheet">
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Typography */
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Open Sans', sans-serif;
+            margin-bottom: 1rem;
+            color: #2C3E50;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        /* Colors */
+        :root {
+            --primary-color: #E74C3C; /* Ember Red */
+            --secondary-color: #3498DB; /* Calm Blue */
+            --light-color: #F4F4F4;
+            --dark-color: #2C3E50;
+            --text-color: #333;
+            --white: #FFFFFF;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--white);
+            border-bottom: 1px solid #ddd;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            overflow: hidden;
+            padding: 0 20px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .navbar-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .navbar-menu li {
+            margin-left: 20px;
+        }
+
+        .navbar-menu a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-menu a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Mobile Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: var(--dark-color);
+            margin: 4px;
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: url('https://via.placeholder.com/1920x1080') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding-top: 60px; /* To offset fixed navbar */
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(44, 62, 80, 0.6);
+        }
+
+        .hero-content {
+            position: relative;
+            color: var(--white);
+            text-align: center;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #c0392b;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 60px 0;
+            background-color: var(--light-color);
+        }
+
+        .features h2 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .feature-items {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .feature-item {
+            background-color: var(--white);
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            width: 30%;
+            margin-bottom: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .feature-item img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+        }
+
+        /* About Section */
+        .about {
+            padding: 60px 0;
+        }
+
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .about-text {
+            width: 50%;
+            padding-right: 20px;
+        }
+
+        .about-text h2 {
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+        }
+
+        .about-image {
+            width: 45%;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 60px 0;
+            background-color: var(--light-color);
+        }
+
+        .testimonials h2 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .testimonial-items {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .testimonial-item {
+            background-color: var(--white);
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            width: 45%;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .testimonial-item img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-item p {
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-item h3 {
+            color: var(--primary-color);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 60px 0;
+        }
+
+        .contact h2 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            max-width: 500px;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .contact-form button {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            background-color: #c0392b;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: var(--white);
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .social-links a {
+            color: var(--white);
+            margin: 0 10px;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .feature-item, .testimonial-item {
+                width: 45%;
+            }
+
+            .about-text, .about-image {
+                width: 100%;
+                padding: 0;
+            }
+
+            .about-content {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar-menu {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background-color: var(--white);
+                position: absolute;
+                top: 60px;
+                left: 0;
+            }
+
+            .navbar-menu.active {
+                display: flex;
+            }
+
+            .navbar-menu li {
+                margin: 15px 0;
+                text-align: center;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .feature-item, .testimonial-item {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="navbar">
+                <a href="#" class="navbar-brand">EmberAssess</a>
+                <ul class="navbar-menu" id="navbar-menu">
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="hamburger" id="hamburger">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Welcome to EmberAssess</h1>
+            <p>Precision in Every Evaluation - Empowering Your Decisions with Insightful Assessments.</p>
+            <a href="#contact" class="btn-primary">Get Started</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2>Our Features</h2>
+            <div class="feature-items">
+                <div class="feature-item">
+                    <img src="https://via.placeholder.com/60" alt="Feature 1">
+                    <h3>Advanced Analytics</h3>
+                    <p>Transform data into actionable insights with our cutting-edge analytics tools.</p>
+                </div>
+                <div class="feature-item">
+                    <img src="https://via.placeholder.com/60" alt="Feature 2">
+                    <h3>Customizable Assessments</h3>
+                    <p>Create tailored assessments to meet the unique needs of your organization.</p>
+                </div>
+                <div class="feature-item">
+                    <img src="https://via.placeholder.com/60" alt="Feature 3">
+                    <h3>Secure & Compliant</h3>
+                    <p>Ensure data security and compliance with industry standards and regulations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About EmberAssess</h2>
+                    <p>EmberAssess is a leading test and assessment platform designed to deliver precise and insightful evaluations. Our mission is to empower organizations with the tools they need to make informed decisions, foster growth, and achieve excellence.</p>
+                    <p>With a focus on innovation and user-centric design, EmberAssess provides comprehensive solutions tailored to various industries, including education, corporate, healthcare, and more.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://via.placeholder.com/500x300" alt="About Us">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2>What Our Clients Say</h2>
+            <div class="testimonial-items">
+                <div class="testimonial-item">
+                    <img src="https://via.placeholder.com/80" alt="Client 1">
+                    <p>"EmberAssess has revolutionized our employee evaluation process. The insights we gain are invaluable."</p>
+                    <h3>Jane Doe</h3>
+                    <p>HR Manager, TechCorp</p>
+                </div>
+                <div class="testimonial-item">
+                    <img src="https://via.placeholder.com/80" alt="Client 2">
+                    <p>"The customizable assessments allowed us to tailor evaluations to our specific needs. Highly recommended!"</p>
+                    <h3>John Smith</h3>
+                    <p>Director of Education, LearnWell</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <div class="contact-form">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea rows="5" placeholder="Your Message" required></textarea>
+                <button type="submit">Send Message</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 EmberAssess. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i>FB</i></a>
+                <a href="#" aria-label="Twitter"><i>TW</i></a>
+                <a href="#" aria-label="LinkedIn"><i>LN</i></a>
+                <a href="#" aria-label="Instagram"><i>IG</i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Mobile Menu -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navbarMenu = document.getElementById('navbar-menu');
+
+        hamburger.addEventListener('click', () => {
+            navbarMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+    </script>
+
+</body>
+</html>
